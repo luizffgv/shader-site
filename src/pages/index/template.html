@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Find the best Minecraft shaderpack for you."
+    />
+    <meta name="theme-color" content="#2db2ef" />
+    <meta name="color-scheme" content="dark" />
+    <title>Shader Site</title>
+    <meta property="og:title" content="Shader Site" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shadersite.luizf.dev" />
+    <meta
+      property="og:image"
+      content="https://shadersite.luizf.dev/assets/og-image.webp"
+    />
+  </head>
+
+  <body>
+    <div id="rotate-screen-warning">
+      <p>Use landscape mode for better viewing</p>
+    </div>
+    <nav id="grid" role="radiogroup" aria-label="Scene selector"></nav>
+    <x-multiimgcmp id="cmp"></x-multiimgcmp>
+    <footer role="group" aria-label="footer">
+      <div id="logo-container">
+        <img
+          id="logo"
+          src="assets/logo.webp"
+          alt="Shader Site logo"
+          width="256px"
+        />
+        <div>
+          <p id="wordmark">Shader Site</p>
+          <p>Rice your blocks</p>
+        </div>
+      </div>
+      <div id="links">
+        <button
+          id="share"
+          class="button"
+          type="button"
+          aria-label="Share website"
+        >
+          <ion-icon name="share-social-outline"></ion-icon>
+          <p>Share</p>
+        </button>
+        <a
+          class="button"
+          href="https://github.com/luizffgv/shader-site"
+          aria-label="View source code"
+        >
+          <ion-icon name="logo-github"></ion-icon>
+          <p>Source code</p>
+        </a>
+      </div>
+    </footer>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+@use "sass:math";
+
+@use "Styles/colors";
+@use "Styles/variables" as *;
+
+@keyframes arrow-blink {
+  0%,
+  25%,
+  75%,
+  100% {
+    color: colors.$bg-close;
+  }
+  50% {
+    color: colors.$primary;
+  }
+}
+
+$top-bar-height: 64px;
+$transition-duration: 0.5s;
+$half-transition-duration: math.div($transition-duration, 2);
+
+#top-bar {
+  display: flex;
+  height: $top-bar-height;
+  justify-content: center;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+// NOTE :is(:hover, :has(input:focus)) isn't working on Firefox as of writing this
+#top-bar:hover #selectors,
+#top-bar:has(input:focus) #selectors {
+  transform: none;
+  transition: transform $half-transition-duration;
+
+  input {
+    transition-delay: $half-transition-duration, 0ms;
+    opacity: 1;
+  }
+}
+
+#selectors {
+  background-color: colors.$bg-close;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  transform: translateY(-$top-bar-height);
+  transition: transform $half-transition-duration $half-transition-duration;
+  width: 100%;
+
+  input {
+    background: none;
+    border: none;
+    color: colors.$primary;
+    font-family: $font-title;
+    font-size: min(32px, 5vw);
+    opacity: 0;
+    outline: none;
+    padding: 0 16px;
+    text-align: center;
+    text-overflow: ellipsis;
+    transition-duration: $half-transition-duration;
+    transition-property: opacity, color;
+    width: 50%;
+
+    &.invalid {
+      color: colors.$warning;
+    }
+
+    &::placeholder {
+      color: colors.$primary;
+      opacity: 0.333;
+    }
+
+    // Down arrow
+    &::-webkit-calendar-picker-indicator {
+      display: none !important;
+    }
+  }
+}
+
+#arrow {
+  $font-size: 24px;
+
+  animation: arrow-blink 2.5s ease-in-out infinite;
+  bottom: -($font-size + 8px);
+  left: 50%;
+  position: absolute;
+  transition: opacity $half-transition-duration $half-transition-duration;
+  translate: -50%;
+  font-size: $font-size;
+
+  // NOTE :is(:hover, :has(input:focus)) isn't working on Firefox as of writing this
+  #top-bar:hover &,
+  #top-bar:has(input:focus) & {
+    transition-delay: 0ms;
+    opacity: 0;
+  }
+}

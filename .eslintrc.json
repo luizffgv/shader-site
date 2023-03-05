@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:unicorn/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "unicorn", "eslint-plugin-tsdoc"],
+  "ignorePatterns": ["dist", "*.js", "*.mjs", "*.cjs"],
+  "rules": {
+    // Null and undefined have different meanings and aren't interchangeable.
+    "unicorn/no-null": "off",
+    // querySelector and getElement methods work differently and aren't
+    // interchangeable.
+    "unicorn/prefer-query-selector": "off",
+    // appendChild returns the appended node, append does not.
+    "unicorn/prefer-dom-node-append": "off",
+    "tsdoc/syntax": "warn"
+  }
+}

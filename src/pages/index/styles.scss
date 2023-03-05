@@ -1,0 +1,114 @@
+@use "Styles/colors";
+@use "Styles/variables" as *;
+
+// Fonts can't be imported in _global.scss
+// TODO Restructure the project so fonts can be imported in the files they are used
+@import url("https://fonts.googleapis.com/css2?family=Koulen&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 32px;
+
+  #logo-container {
+    align-items: center;
+    color: grey;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.5em;
+    justify-content: center;
+    text-align: center;
+
+    #wordmark {
+      color: rgb(45, 178, 239);
+      font-family: "Koulen", sans-serif;
+      font-size: 3em;
+      line-height: 1;
+    }
+  }
+
+  #links {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 32px;
+
+    a,
+    button {
+      align-items: center;
+      color: colors.$fg;
+      display: flex;
+      margin: 12px;
+      padding: 12px;
+      text-decoration: none;
+      transition: color 0.5s, background-color 0.5s;
+
+      &:hover {
+        color: colors.$primary;
+      }
+
+      ion-icon {
+        font-size: 1.5em;
+        margin-right: 12px;
+      }
+    }
+  }
+}
+
+#rotate-screen-warning {
+  background-color: colors.$warning;
+  padding: 16px;
+  text-align: center;
+
+  @media (orientation: landscape) {
+    display: none;
+  }
+}
+
+#grid {
+  background-color: colors.$bg-close;
+  display: flex;
+  overflow-x: auto;
+  padding: 16px 0;
+  user-select: none;
+
+  .entry {
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 8px;
+    outline: 2px solid transparent;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.5s;
+
+    &[aria-checked="true"] {
+      color: colors.$primary;
+      outline: 2px solid colors.$primary;
+    }
+
+    &:focus {
+      outline: 2px solid colors.$fg;
+    }
+
+    img {
+      width: 256px;
+    }
+
+    .name {
+      backdrop-filter: blur(2px);
+      background-color: rgba(0, 0, 0, 0.5);
+      bottom: 0px;
+      font-family: $font-title;
+      padding: 4px 0;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}

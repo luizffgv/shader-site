@@ -1,0 +1,30 @@
+@use "Styles/colors";
+
+img {
+  display: block;
+  user-select: none;
+  width: 100%;
+}
+
+#container {
+  contain: content;
+  display: grid;
+  grid-template-areas: "stack";
+
+  @supports not (contain: content) {
+    overflow: hidden; // Otherwise the divider expands the document width when on borders;
+  }
+}
+
+#first,
+#second {
+  grid-area: stack;
+}
+
+#divider {
+  background-color: colors.$bg-close;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 3px;
+}
