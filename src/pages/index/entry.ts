@@ -2,12 +2,11 @@ import "./styles.scss?apply";
 
 import { MultiImageCompareElement } from "Components/multiimgcmp";
 
-import scenes, { Scene } from "Assets/scenes.js";
+import SCENES, { Scene } from "Assets/scenes.js";
 import SHADERPACKS, { Shaderpack } from "Assets/shaderpacks.js";
 import { throwIfNull, trySpecify } from "@luizffgv/ts-conversions";
 import { Axis, scrollOnDrag } from "Scripts/scroll";
-
-const DEFAULT_SHADERPACK_NAME = "Vanilla";
+import { DEFAULT_SHADERPACK_NAME } from "./constants";
 
 function getImagePath(scene: Scene, shaderpack: Shaderpack) {
   return `assets/scenes/${scene.dir}/${shaderpack.file}`;
@@ -51,24 +50,22 @@ addEventListener(
 
     scrollOnDrag(elements.grid, Axis.Horizontal);
 
-    setSceneOptions(elements.compare, throwIfNull(scenes[0]));
+    setSceneOptions(elements.compare, throwIfNull(SCENES[0]));
 
     const grid = document.getElementById("grid");
     if (grid == null) throw new Error("Couldn't find #grid element");
 
-    // We need to have scenes and shaderpacks
-    if (scenes.length === 0) throw new Error("No scenes found");
-    if (Object.keys(SHADERPACKS).length === 0)
-      throw new Error("No shaderpacks found");
+    // We need to have at least one scene
+    if (SCENES.length === 0) throw new Error("No scenes found");
 
-    for (const scene of scenes) {
-      const entry = grid.appendChild(document.createElement("div"));
-      entry.setAttribute("tabindex", "0");
-      entry.setAttribute("role", "radio");
-      entry.setAttribute("aria-label", `${scene.name} scene`);
-      entry.setAttribute("aria-checked", "false");
-      entry.classList.add("entry");
+    for (const entry of grid.children) {
+      if (!(entry instanceof HTMLElement))
+        throw new Error("entry is not an HTML element");
+
       const select = () => {
+        const sceneIndex = Number.parseInt(throwIfNull(entry.dataset["index"]));
+        const scene = throwIfNull(SCENES[sceneIndex]);
+
         const previousActive = grid.querySelector(
           ":scope > [aria-checked='true']"
         );
@@ -83,21 +80,12 @@ addEventListener(
         if (rect.y + rect.height > document.documentElement.clientHeight)
           elements.compare.scrollIntoView({ behavior: "smooth" });
       };
+
       entry.addEventListener("click", select);
       entry.addEventListener("keypress", (event) => {
         event.preventDefault();
         if (event.key === " ") select();
       });
-
-      const image = entry.appendChild(document.createElement("img"));
-      image.src = getImagePath(scene, SHADERPACKS[DEFAULT_SHADERPACK_NAME]);
-      image.alt = `${scene.name} on ${DEFAULT_SHADERPACK_NAME}`;
-      image.setAttribute("aria-hidden", "true");
-
-      const name = entry.appendChild(document.createElement("p"));
-      name.setAttribute("aria-hidden", "true");
-      name.classList.add("name");
-      name.textContent = scene.name;
     }
 
     throwIfNull(grid.firstElementChild).setAttribute("aria-checked", "true");
